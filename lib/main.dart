@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/view/pick_image.dart';
+import 'package:camera/camera.dart';
 
-void main() {
-// Suggested code may be subject to a license. Learn more: ~LicenseLog:2450782504.
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
 // Suggested code may be subject to a license. Learn more: ~LicenseLog:1015538657.
   runApp(const MyApp());
 }
