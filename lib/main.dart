@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/view/pick_image.dart';
-import 'package:camera/camera.dart';
-import 'package:myapp/model/camera_provider.dart';
-import 'package:provider/provider.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  final cameras = await availableCameras();
-  final firstCamera = cameras.first;
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => CameraProvider()..setCamera(firstCamera),
-      child: const MyApp(),
-    ),
-  );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   const MyApp({super.key});
 
   @override
@@ -26,8 +16,4 @@ class MyApp extends StatelessWidget {
       home: PickImage(),
     );
   }
-
 }
-
-
-
