@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/pick_image.dart';
+import 'package:myapp/view/take_or_select_pic.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart';
 
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PickImage(),
+      home: const CameraWidget(),
     );
   }
 }
