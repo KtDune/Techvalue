@@ -11,7 +11,6 @@ class Camera extends StatefulWidget {
 
 class _CameraState extends State<Camera> {
 
-  late CameraDescription _camera;
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -25,7 +24,7 @@ class _CameraState extends State<Camera> {
   void getCamera() {
 
     _controller = CameraController(
-      _camera,
+      widget.camera,
       ResolutionPreset.max
     );
 

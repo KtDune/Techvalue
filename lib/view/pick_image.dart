@@ -38,14 +38,18 @@ class _PickImageState extends State<PickImage> {
       body: FutureBuilder<CameraDescription>(
         future: _cameraFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return Camera(camera: snapshot.data!);
-            } else {
-              return const Center(child: Text('No camera found'));
-            }
-          } else {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading spinner while waiting for the future to complete
             return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            // Show an error message if the future completes with an error
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            // Only build the Camera widget if we have data
+            return Camera(camera: snapshot.data!);
+          } else {
+            // Handle the case where snapshot has no data
+            return const Center(child: Text('No camera available'));
           }
         },
       ),
