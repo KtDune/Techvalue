@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Camera extends StatefulWidget {
   final CameraDescription camera;
@@ -24,7 +27,18 @@ class _CameraState extends State<Camera> {
     _controller = CameraController(widget.camera, ResolutionPreset.max);
 
     _initializeControllerFuture = _controller.initialize();
-    setState(() {});
+  }
+
+  void takePhoto() async {
+    final image = await _controller.takePicture();
+
+    final directory = await getTemporaryDirectory();
+    final path = '${directory.path}/${DateTime.now()}.png';
+    print(path);
+
+      // Save the file to the temporary directory
+    final File tempFile = File(path);
+    await tempFile.writeAsBytes(await image.readAsBytes());
   }
 
   @override
@@ -42,10 +56,12 @@ class _CameraState extends State<Camera> {
       Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            margin: const EdgeInsetsDirectional.only(bottom: 25.0),
+            margin: const EdgeInsetsDirectional.only(bottom: 19.0),
             child: FloatingActionButton(
               backgroundColor: Colors.grey,
-              onPressed: (() {}),
+              onPressed: () {
+                takePhoto();
+              },
               child: const Icon(Icons.camera_alt),
             ),
           )),
