@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/model/file_length.dart';
+import 'package:provider/provider.dart';
 
 class NextButton extends StatefulWidget {
   const NextButton({super.key});
@@ -17,6 +19,7 @@ class _NextButtonState extends State<NextButton> {
         backgroundColor: Colors.blueAccent
       ),
       onPressed: onPressed, 
-      child: const Text("Next (0)"));
+      child: Text("Next (${context.watch<FileCountProvider>().fileCount})")
+    );
   }
 }

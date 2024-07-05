@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/model/file_length.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 class Camera extends StatefulWidget {
   final CameraDescription camera;
@@ -29,16 +31,17 @@ class _CameraState extends State<Camera> {
     _initializeControllerFuture = _controller.initialize();
   }
 
-  void takePhoto() async {
+  void takePhoto({required FileCountProvider fCP}) async {
     final image = await _controller.takePicture();
 
     final directory = await getTemporaryDirectory();
     final path = '${directory.path}/${DateTime.now()}.png';
-    print(path);
 
       // Save the file to the temporary directory
     final File tempFile = File(path);
     await tempFile.writeAsBytes(await image.readAsBytes());
+
+    fCP.updateFileCount();
   }
 
   @override
@@ -60,7 +63,8 @@ class _CameraState extends State<Camera> {
             child: FloatingActionButton(
               backgroundColor: Colors.grey,
               onPressed: () {
-                takePhoto();
+                FileCountProvider fCP = context.read<FileCountProvider>();
+                takePhoto(fCP: fCP);
               },
               child: const Icon(Icons.camera_alt),
             ),

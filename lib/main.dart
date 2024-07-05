@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/model/file_length.dart';
 import 'package:myapp/view/take_or_select_pic.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 
 void requestPermission() async {
     // Check if the platform is not web, as web has no permissions
@@ -45,13 +47,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => FileCountProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const CameraWidget(),
       ),
-      home: const CameraWidget(),
     );
   }
+
 }
 
