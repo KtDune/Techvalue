@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/model/file_length.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 class Camera extends StatefulWidget {
@@ -33,13 +30,6 @@ class _CameraState extends State<Camera> {
 
   void takePhoto({required FileCountProvider fCP}) async {
     final image = await _controller.takePicture();
-
-    final directory = await getTemporaryDirectory();
-    final path = '${directory.path}/${DateTime.now()}.png';
-
-      // Save the file to the temporary directory
-    final File tempFile = File(path);
-    await tempFile.writeAsBytes(await image.readAsBytes());
 
     fCP.updateFileCount();
   }
