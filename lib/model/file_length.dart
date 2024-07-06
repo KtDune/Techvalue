@@ -22,7 +22,7 @@ class FileCountProvider extends ChangeNotifier {
     final directory = await getTemporaryDirectory();
     final tempDir = Directory(directory.path);
     final List<FileSystemEntity> entities = tempDir.listSync();
-    fileCount = entities.whereType<File>().length;
+    fileCount = entities.length;
     notifyListeners();
   }
 }
